@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -18,9 +19,12 @@ import java.net.URL;
 import java.util.concurrent.ExecutionException;
 
 import androidx.appcompat.app.AppCompatActivity;
-import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
+
+import timber.log.Timber;
+import static timber.log.Timber.DebugTree;
 
 public class MainActivity extends AppCompatActivity {
     @BindView(R.id.cityName) EditText cityName;
@@ -79,6 +83,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(new DebugTree());
+        }
 
     }
 
@@ -150,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     if (message != "") {
+                        Log.i("MESSAGE", message);
                         resultsTextView.setText(message);
                     }
 
